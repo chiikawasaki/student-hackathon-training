@@ -1,8 +1,9 @@
 import "./App.css";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import EditPage from "./EditPage";
 
-type Task = {
+export type Task = {
   title: string;
   id: string;
   isComplete: boolean;
@@ -27,12 +28,43 @@ function App() {
   }
 
   function handleCompleteTask(id: string): void {
-    tasks.map((task) => {
+    const newTasks = tasks.map((task) => {
       if (task.id === id) {
-        task.isComplete = true;
+        return { ...task, isComplete: true };
       }
-      setTasks(tasks.filter((task) => task.isComplete === false));
+      return task;
     });
+    setTasks(newTasks);
+  }
+
+  function handleDoEdit(id: string): void {
+    const newTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, isEdit: true };
+      }
+      return task;
+    });
+    setTasks(newTasks);
+  }
+
+  function handleCancel(id: string): void {
+    const newTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, isEdit: false };
+      }
+      return task;
+    });
+    setTasks(newTasks);
+  }
+
+  function handleUpdate(id: string, taskTitle: string): void {
+    const newTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, title: taskTitle, isEdit: false };
+      }
+      return task;
+    });
+    setTasks(newTasks);
   }
 
   return (
@@ -40,6 +72,7 @@ function App() {
       <h1>TODOアプリ</h1>
       <div id="input-form">
         <input
+          id="task-form"
           value={task.title}
           onChange={(e) =>
             setTask({
@@ -56,17 +89,30 @@ function App() {
       </div>
       <div id="task-list-area">
         <ul>
-          {tasks.map((task, index) => (
-            <div id="task" key={index}>
-              <li>{task.title}</li>
-              <button
-                id="Complete-task-button"
-                onClick={() => handleCompleteTask(task.id)}
-              >
-                完了
-              </button>
-            </div>
-          ))}
+          {tasks
+            .filter((task) => !task.isComplete)
+            .map((task, index) => (
+              <div id="task" key={index}>
+                {task.isEdit ? (
+                  <EditPage
+                    key={index}
+                    task={task}
+                    onCancel={handleCancel}
+                    onUpdate={handleUpdate}
+                  />
+                ) : (
+                  <>
+                    <li onClick={() => handleDoEdit(task.id)}>{task.title}</li>
+                    <button
+                      id="Complete-task-button"
+                      onClick={() => handleCompleteTask(task.id)}
+                    >
+                      完了
+                    </button>
+                  </>
+                )}
+              </div>
+            ))}
         </ul>
       </div>
     </>

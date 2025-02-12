@@ -13,7 +13,7 @@
   margin-bottom: 1rem;
 }
 
-input {
+#task-form {
   border: 1px solid #cfcdcd;
   border-radius: 3px;
   width: 300px;
@@ -42,8 +42,22 @@ button {
 #task {
   display: flex;
   justify-content: space-between;
-  width: 150px;
+  width: 300px;
   margin-bottom: 5px;
+}
+
+#edit-task-form {
+  display: flex;
+  justify-content: left;
+}
+#cancel-button {
+  border: 1px solid red;
+  background-color: red;
+}
+
+#update-button {
+  border: 1px solid blue;
+  background-color: blue;
 }
 
 @media screen and (max-width: 480px) {
