@@ -21,12 +21,29 @@ input {
 }
 
 button {
+  border-radius: 3px;
+  color: white;
+}
+
+#add-task-button {
   border: 1px solid black;
   border-radius: 3px;
   background-color: black;
   color: white;
   height: 27px;
   margin-left: 5px;
+}
+
+#Complete-task-button {
+  border: 1px solid rgb(15, 123, 60);
+  background-color: rgb(15, 123, 60);
+}
+
+#task {
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+  margin-bottom: 5px;
 }
 
 @media screen and (max-width: 480px) {
